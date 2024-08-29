@@ -1,11 +1,35 @@
 import { useState } from "react"
+import confetti from 'canvas-confetti';
 import { ControllerCardFinish, ControllerCardIsPast, ControllerCardPast, ControllerCardToday } from "../components/controllersCard"
 import { useCart } from "../contexts"
 import { CardShowpastday, CardshowToday } from "../components/cards"
 
 let isFinishedCard = false
+const handleConfetti = () => {
+   confetti({
+      particleCount: 130,
+      startVelocity: 30,
+      spread: 360,
+      origin: {
+         x: 0.5,
+         y: 0.5,
+      },
+   });
+};
+
+let percentageToday = 0
+let percentagePast = 0
+
+let isbarToday = false
+let isbarFinish = false
+
 export const HomePage = () => {
    const { state } = useCart()
+
+   const [numState, setNumState] = useState({
+      numToday: state.cardDay.length,
+      numPast: state.cardDayPast.length,
+   })
 
    const [controllerCard, setControllerCard] = useState({
       open_controllerCardPast: state.cardDayPast.length > 0 && true,// en el caso de que si existe las card pasadas se activa el controllador
@@ -14,7 +38,7 @@ export const HomePage = () => {
       open_controllerCardFinish: state.cardDayPast.length === 0 && state.cardDayPast.length === 0 ? true : false,
    })
 
-   const [opneCard, setopenCard] = useState({
+   const [openCard, setopenCard] = useState({
       open_cardPast: false,
       open_cardToday: false,
       open_cardChallenge: false,
@@ -36,6 +60,8 @@ export const HomePage = () => {
          open_cardChallenge: false,
       }))
       closeCardController()
+      isbarToday = true
+      isbarFinish = false
    }
 
    const handelComplete = () => {
@@ -45,6 +71,8 @@ export const HomePage = () => {
          open_cardChallenge: false,
       }))
       closeCardController()
+      isbarToday = false
+      isbarFinish = true
    }
 
    const handelChallend = () => {
@@ -68,6 +96,7 @@ export const HomePage = () => {
    // console.log(controllerCard)
    const isCardToday = () => {
       if (state.cardDay.length === 1) {
+         handleConfetti()
          setopenCard(() => ({
             open_cardToday: false,
             open_cardPast: false,
@@ -95,6 +124,7 @@ export const HomePage = () => {
    }
    const isCardPast = () => {
       if (state.cardDayPast.length === 1) {
+         handleConfetti()
          setopenCard(() => ({
             open_cardToday: false,
             open_cardPast: false,
@@ -117,18 +147,40 @@ export const HomePage = () => {
             open_controllerCardIsPast: false,
             open_controllerCardFinish: false,
          }))
+
       }
    }
 
-   return (
-      <main className="min-h-[calc(100vh-4rem)] w-fit mx-auto flex justify-center items-center border-red border">
+   percentageToday = Math.round((((numState.numToday - state.cardDay.length) / numState.numToday) * 100))
+   percentagePast = Math.round((((numState.numPast - state.cardDayPast.length) / numState.numPast) * 100))
 
-         <section className="grid grid-rows-[7rem_1rem_minmax(0,_1fr)]  gap-2">
-            <div className="row-start-1 bg-black">
+   console.log(percentagePast)
+   return (
+      <main className="min-h-[calc(100vh-4rem)] w-fit mx-auto flex justify-center items-center">
+
+         <section className="grid grid-rows-[5rem_1.3rem_minmax(0,_1fr)]  gap-2">
+            <div className="row-start-1 text-black text-5xl font-semibold place-self-center place-content-center">
+               <h3 className={`${openCard.open_cardToday ? 'block' : 'hidden'}`}>
+                  {state.cardDay.length}
+               </h3>
+               <h3 className={`${openCard.open_cardPast ? 'block' : 'hidden'}`}>
+                  {state.cardDayPast.length}
+               </h3>
 
             </div>
-            <div className="row-start-2 bg-red">
-
+            <div className="row-start-2 text-base bg-slate-600 rounded-md overflow-hidden">
+               {
+                  isbarToday &&
+                  <div className={`px-1 bg-[#48b] w-[${percentageToday}%] h-full text-center`}>
+                     {/* {percentageToday}% */}
+                  </div>
+               }
+               {
+                  isbarFinish &&
+                  <div className={`px-1 bg-[#48b] w-[${percentagePast}%] h-full text-center `}>
+                     {/* {percentagePast}% */}
+                  </div>
+               }
             </div>
             <div className="row-start-3">
                {
@@ -159,19 +211,19 @@ export const HomePage = () => {
                      isFinished={isFinishedCard}
                   />
                }
-               {opneCard.open_cardToday &&
+               {openCard.open_cardToday &&
                   <CardshowToday
                      isCardToday={isCardToday}
                   />
                }
                {
-                  opneCard.open_cardPast &&
+                  openCard.open_cardPast &&
                   <CardShowpastday
                      isCardPast={isCardPast}
                   />
                }
             </div>
          </section>
-      </main>
+      </main >
    )
 }

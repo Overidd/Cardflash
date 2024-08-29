@@ -121,7 +121,6 @@ export const ControllerCardIsPast = ({ handelComplete, handelChallend, className
                />
             </div>
          </>
-
       </Card>
    )
 }
