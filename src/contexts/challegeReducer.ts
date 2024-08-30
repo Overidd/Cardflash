@@ -17,10 +17,10 @@ export const challegeReduce = (state: ChallegeRandom[], action: challengeAction)
    switch (action.type) {
       case ACTION_TYPE.SET_CARDS: {
 
-         const questions = action.payload.data.map(({ Answers }) => {
+         const response = action.payload.data.map(({ Answers }) => {
             return Answers[0]
          }, [])
-         console.log(questions)
+         console.log(response)
 
 
          const newState = action.payload.data.map((item) => {
@@ -29,10 +29,10 @@ export const challegeReduce = (state: ChallegeRandom[], action: challengeAction)
             let i = 0
 
             while (i < (action.payload.numQueries - 1)) {
-               const randomIndex = Math.floor(Math.random() * questions.length)
+               const randomIndex = Math.floor(Math.random() * response.length)
 
-               if (questions[randomIndex] !== item.Answers[0]) {
-                  const question = questions[randomIndex]
+               if (response[randomIndex] !== item.Answers[0]) {
+                  const question = response[randomIndex]
                   questionRandom.push(question)
                   i++
                }

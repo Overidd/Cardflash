@@ -4,7 +4,8 @@ import { ChallegeRandom } from "../utils";
 type ContectChallengeType = {
    updateFetchDay: () => Promise<boolean>;
    updateFetchCategory: (category: string) => Promise<boolean>;
-   challengeAnswer: (response: string, id: string) => void;
+   challengeAnswer: (id: string, response: string) => boolean;
+   challengeDispatch: (id: string) => void;
    state: ChallegeRandom[];
    // isLoading: boolean;
    // counterAnswers: {
@@ -24,7 +25,8 @@ const defaultState = {
    },
    updateFetchDay: () => Promise.resolve(false),
    updateFetchCategory: () => Promise.resolve(false),
-   challengeAnswer: () => { },
+   challengeAnswer: () => false,
+   challengeDispatch: () => {},
 }
 
 export const ContextChallenge = createContext<ContectChallengeType>(defaultState)

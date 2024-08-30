@@ -1,14 +1,15 @@
 import { useState } from "react"
 import confetti from 'canvas-confetti';
 import { ControllerCardFinish, ControllerCardIsPast, ControllerCardPast, ControllerCardToday } from "../components/controllersCard"
-import { useCart } from "../contexts"
+import { useCart, useChallenge, useCounterAnswers } from "../contexts"
 import { CardShowpastday, CardshowToday } from "../components/cards"
+import { CardChallend } from "../components/cards/CardChallend";
 
 let isFinishedCard = false
 const handleConfetti = () => {
    confetti({
       particleCount: 130,
-      startVelocity: 30,
+      startVelocity: 40,
       spread: 360,
       origin: {
          x: 0.5,
@@ -19,12 +20,15 @@ const handleConfetti = () => {
 
 let percentageToday = 0
 let percentagePast = 0
+let percentageChalleng = 0
 
 let isbarToday = false
 let isbarFinish = false
+let isbarChallenge = false
 
 export const HomePage = () => {
    const { state } = useCart()
+   const { state: stateChallenge } = useChallenge()
 
    const [numState, setNumState] = useState({
       numToday: state.cardDay.length,
@@ -62,6 +66,7 @@ export const HomePage = () => {
       closeCardController()
       isbarToday = true
       isbarFinish = false
+      isbarChallenge = false
    }
 
    const handelComplete = () => {
@@ -73,6 +78,7 @@ export const HomePage = () => {
       closeCardController()
       isbarToday = false
       isbarFinish = true
+      isbarChallenge = false
    }
 
    const handelChallend = () => {
@@ -81,7 +87,10 @@ export const HomePage = () => {
          open_cardToday: false,
          open_cardChallenge: true,
       }))
-
+      closeCardController()
+      isbarToday = false
+      isbarFinish = false
+      isbarChallenge = true
    }
 
    const handelOmit = () => {
@@ -150,37 +159,52 @@ export const HomePage = () => {
 
       }
    }
-
+   const { total } = useCounterAnswers()
    percentageToday = Math.round((((numState.numToday - state.cardDay.length) / numState.numToday) * 100))
    percentagePast = Math.round((((numState.numPast - state.cardDayPast.length) / numState.numPast) * 100))
+   percentageChalleng = Math.round((((total - stateChallenge.length) / total) * 100))
 
-   console.log(percentagePast)
    return (
       <main className="min-h-[calc(100vh-4rem)] w-fit mx-auto flex justify-center items-center">
 
-         <section className="grid grid-rows-[5rem_1.3rem_minmax(0,_1fr)]  gap-2">
-            <div className="row-start-1 text-black text-5xl font-semibold place-self-center place-content-center">
+         <section className="grid grid-rows-[4rem_1.3rem_minmax(0,_1fr)] gap-3">
+            <div className="row-start-1 text-[#fff] text-6xl font-semibold place-self-center place-content-center">
                <h3 className={`${openCard.open_cardToday ? 'block' : 'hidden'}`}>
                   {state.cardDay.length}
                </h3>
                <h3 className={`${openCard.open_cardPast ? 'block' : 'hidden'}`}>
                   {state.cardDayPast.length}
                </h3>
-
+               <h3 className={`${openCard.open_cardChallenge ? 'block' : 'hidden'}`}>
+                  {stateChallenge.length}
+               </h3>
+               {/* stateChallenge */}
             </div>
-            <div className="row-start-2 text-base bg-slate-600 rounded-md overflow-hidden">
-               {
-                  isbarToday &&
-                  <div className={`px-1 bg-[#48b] w-[${percentageToday}%] h-full text-center`}>
-                     {/* {percentageToday}% */}
+            <div className="relative row-start-2 text-base bg-slate-600 rounded-md overflow-hidden">
+               {isbarToday && (
+                  <div
+                     className="px-1 bg-[#48b] h-full text-center transition-all"
+                     style={{ width: `${percentageToday}%` }}
+                  >
+                     <small className="absolute left-0 right-0 mx-auto w-fit font-semibold">{percentageToday}%</small>
                   </div>
-               }
-               {
-                  isbarFinish &&
-                  <div className={`px-1 bg-[#48b] w-[${percentagePast}%] h-full text-center `}>
-                     {/* {percentagePast}% */}
+               )}
+               {isbarFinish && (
+                  <div
+                     className="px-1 bg-[#48b] h-full text-center transition-all"
+                     style={{ width: `${percentagePast}%` }}
+                  >
+                     <small className="absolute left-0 right-0 mx-auto w-fit font-semibold">{percentagePast}%</small>
                   </div>
-               }
+               )}
+               {isbarChallenge && (
+                  <div
+                     className="px-1 bg-[#48b] h-full text-center transition-all"
+                     style={{ width: `${percentageChalleng}%` }}
+                  >
+                     <small className="absolute left-0 right-0 mx-auto w-fit font-semibold">{percentageChalleng}%</small>
+                  </div>
+               )}
             </div>
             <div className="row-start-3">
                {
@@ -220,6 +244,12 @@ export const HomePage = () => {
                   openCard.open_cardPast &&
                   <CardShowpastday
                      isCardPast={isCardPast}
+                  />
+               }
+               {
+                  // openCard.open_cardChallenge &&
+                  <CardChallend
+                     className={`${openCard.open_cardChallenge ? 'grid' : 'hidden'}`}
                   />
                }
             </div>

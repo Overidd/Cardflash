@@ -6,7 +6,7 @@ import { ButtonResponse } from "../bottoms/ButtonResponse";
 type Ipropite = {
    select: string,
    color: string
-   id: string
+   id?: string
 }[];
 
 interface IQuestion {
@@ -17,10 +17,10 @@ interface IQuestion {
    id: string;
    link: string;
    questionAnswer: (id: string, status: string) => void
-   isCard: ()=> void
+   isCard: () => void
 }
 
-export const CardQuestion = ({ isCard,link, questionAnswer, id, bgColor, question, answer, properties }: IQuestion) => {
+export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, question, answer, properties }: IQuestion) => {
    const [isFlipped, setIsFlipped] = useState(false);
 
    const handleFlip = () => {
@@ -34,7 +34,9 @@ export const CardQuestion = ({ isCard,link, questionAnswer, id, bgColor, questio
    };
 
    const openlink = () => {
-      window.open(link, '_blank');
+      if (link.length > 0) {
+         window.open(link, '_blank');
+      }
    }
    return (
       <Card bgColor={bgColor}>
@@ -57,32 +59,34 @@ export const CardQuestion = ({ isCard,link, questionAnswer, id, bgColor, questio
                   className="p-2 absolute w-full h-full backface-hidden flex justify-center items-center"
                   style={{ backfaceVisibility: "hidden" }}
                >
-                  <div className="space-x-2 absolute top-3 left-3">
+                  <div className="space-x-2 absolute top-3 left-3 text-[0.9rem] font-semibold">
                      {
                         properties.map(({ color, select, id }) => (
-                           <p key={id} className={` w-fit inline-block px-2 py-1 rounded-md bg-${color} border-2 border-[#fff4]`}>{select}
-                           </p>
+                           <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md bg-${color} border-2 border-[#fff4]`}>
+                              {select}
+                           </span>
                         ))
                      }
                   </div>
-                  <div className="text-center text-2xl">
+                  <div className="text-center text-xl">
                      <p>{question}</p>
                   </div>
                </div>
+
                <div
-                  className="p-2 absolute w-full h-full backface-hidden text-2xl grid grid-rows-[10%_60%_20%] gap-2"
+                  className="p-2 absolute w-full h-full backface-hidden text-xl grid grid-rows-[10%_60%_20%] gap-4"
                   style={{
                      transform: "rotateX(180deg)",
                      backfaceVisibility: "hidden",
                   }}
                >
                   <ButtonResponse
-                     className="w-fit ml-auto"
+                     className="w-fit ml-auto py-0"
                      bgColor="link"
                      text="link"
                      onClick={openlink}
                   />
-                  <p className="text-center">{answer}</p>
+                  <p className="w-[90%] mx-auto text-center text-base text-balance place-content-center">{answer}</p>
                   <div className="text-center space-x-4">
                      <ButtonResponse
                         bgColor="incorrect"

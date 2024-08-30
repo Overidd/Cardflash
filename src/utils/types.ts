@@ -1,6 +1,7 @@
 
 export type ChallegeRandom = {
    id: string;
+   Question: string
    page_url: string;
    icon_url: string;
    Category: Category;
@@ -61,9 +62,9 @@ interface Answer {
 }
 
 interface Category {
-   select:  string;
-   color:  string;
-   id: string;
+   select: string;
+   color: string;
+   id?: string;
 }
 
 interface DateClass {

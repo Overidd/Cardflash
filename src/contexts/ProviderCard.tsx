@@ -2,61 +2,9 @@ import { useReducer, ReactNode, useEffect } from 'react'
 import { ContextCard, cardReducer, ACTION_TYPE } from '.'
 import { IdataJSONCard } from '../utils';
 import { getTwoCardType, updateCard } from '../services';
+import { dataQuestion } from '../data/dataQuestion';
 
-const initialState = {
-   cardDay: [
-      {
-         object: "card",
-         id: "1",
-         page_url: "/page1",
-         icon_url: "/icon1.png",
-         database_id: "db1",
-         properties: {
-            Question: { content: "What is the capital of France?", link: null },
-            Category: { select: "Geography", color: "blue", id: "cat1" },
-            Theme: { select: "Europe", color: "green", id: "theme1" },
-            Status: { name: "New", color: "red" },
-            Answer: { content: "Paris", link: null },
-            Date: { date: "2024-08-28" },
-            Respontracker: { number: 3 },
-         },
-      },
-      {
-         object: "card",
-         id: "2",
-         page_url: "/page2",
-         icon_url: "/icon2.png",
-         database_id: "db2",
-         properties: {
-            Question: { content: "What is 2 + 2?", link: null },
-            Category: { select: "Math", color: "yellow", id: "cat2" },
-            Theme: { select: "Arithmetic", color: "orange", id: "theme2" },
-            Status: { name: "New", color: "green" },
-            Answer: { content: "4", link: null },
-            Date: { date: "2024-08-28" },
-            Respontracker: { number: 1 },
-         },
-      },
-   ],
-   cardDayPast: [
-      {
-         object: "card",
-         id: "3",
-         page_url: "/page3",
-         icon_url: "/icon3.png",
-         database_id: "db3",
-         properties: {
-            Question: { content: "What is the boiling point of water?", link: null },
-            Category: { select: "Science", color: "blue", id: "cat3" },
-            Theme: { select: "Physics", color: "purple", id: "theme3" },
-            Status: { name: "Reviewed", color: "grey" },
-            Answer: { content: "100°C", link: null },
-            Date: { date: "2024-08-27" },
-            Respontracker: { number: 2 },
-         },
-      },
-   ],
-};
+const initialState = dataQuestion
 
 
 type ProviderProps = {

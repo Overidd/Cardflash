@@ -15,7 +15,7 @@ export const UserModal = ({ changeFrom }: userModalProps) => {
    return (
       <Modal id='userModal'>
          <motion.div
-            className='bg-white flex justify-center items-center'
+            className='bg-bgColorPrimary text-gray-200 flex justify-center items-center'
             initial={{
                borderRadius: '15%',
                width: '100px',
@@ -24,7 +24,7 @@ export const UserModal = ({ changeFrom }: userModalProps) => {
             animate={{
                borderRadius: '1rem', width: '30rem', height: '20rem'
             }} // Cuadrado final
-            transition={{ duration: 1.1, ease: 'easeInOut' }} // Duración y tipo de transición
+            transition={{ duration: 1, ease: 'easeInOut' }} // Duración y tipo de transición
             onAnimationComplete={() => setAnimationComplete(true)} // Marca la animación como completa
          >
             {
@@ -59,7 +59,7 @@ const UserName = ({ setContinueRegister, className }: UserNameProps) => {
    return (
       <fieldset className={`space-y-4 text-center ${className}`}>
          <motion.input
-            className={`block  border-b-2 p-2 outline-none text-center font-semibold text-[#0008] ${shake ? 'placeholder:text-red border-b-red' : ''}`}
+            className={`block border-b-2 p-2 outline-none text-center font-semibold bg-bgColor ${shake ? 'placeholder:text-red border-b-red' : ''}`}
             type="text"
             name="name"
             autoFocus
@@ -112,11 +112,11 @@ const UserDayConfig = ({ className }: UserDayConfigPros) => {
          <label className='text-base font-bold text-gray-400'>
             Ingresa los días de repaso
          </label>
-         <div className='flex flex-wrap gap-2 px-8'>
+         <div className='flex flex-wrap gap-2 px-8 font-semibold text-gray-200'>
             <>
                <motion.input
                   key={1}
-                  className={`border p-2 outline-none text-center w-11 ${shake ? 'border border-red placeholder:text-red' : ''}`}
+                  className={`border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11 ${shake ? 'border-[#ff5757] placeholder:text-red' : ''}`}
                   name={String('numInput' + 1)}
                   type='number'
                   placeholder={String(1)}
@@ -129,17 +129,17 @@ const UserDayConfig = ({ className }: UserDayConfigPros) => {
                   Array.from({ length: numInput.num }, (_, index) => index + 2).map((index) => (
                      <input
                         key={index}
-                        className="border p-2 outline-none text-center w-11"
+                        className="border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11"
                         type='number'
                         name={String('numInput' + index)}
-                        placeholder={String(index)}
+                        // placeholder={String(index)}
                         autoFocus={index === 1}
                      />
                   ))
 
                }
                <button
-                  className={`bg-gray-200 p-2 min-w-10 rounded-md selection:none ${numInput.error ? 'cursor-no-drop' : ''}`}
+                  className={`bg-slate-900 p-2 min-w-10 rounded-md selection:none ${numInput.error ? 'cursor-no-drop' : ''}`}
                   type='button'
                   disabled={numInput.error ? true : false}
                   onClick={handelNumInput}

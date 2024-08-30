@@ -2,8 +2,11 @@ import { ReactNode, useReducer, useState } from "react";
 import { ContextChallenge, CounterAnswersContext, IsLoadingContext, challegeReduce } from "./";
 import { getCardCategory, getCardRandom } from "../services";
 import { ChallegeRandom } from "../utils";
+import { dataChallenge } from "../data/dataChallenge";
 
-const initialState: ChallegeRandom[] = []
+const initialState: ChallegeRandom[] = [
+
+];
 
 type ProviderProps = {
    children: ReactNode;
@@ -20,25 +23,26 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
 
    const updateFetchDay = async () => {
       setIsLoading(true)
-      const { data, status } = await getCardRandom()
+      // const { data, status } = await getCardRandom()
       setIsLoading(false)
 
-      if (!status) {
-         return status
-      }
+      // if (!status) {
+      // return status
+      // }
 
       dispatch({
          type: "SET_CARDS",
          payload: {
-            data,
+            data: dataChallenge,
             numQueries: 4,
          }
       })
       setCounterAnswers(item => ({
          ...item,
-         total: data.length,
+         total: dataChallenge.length,
       }))
-      return status
+
+      return true
    }
 
    const updateFetchCategory = async (category: string) => {
@@ -65,22 +69,24 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
       return status
    }
 
-   const challengeAnswer = (response: string, id: string) => {
-      const data = state.find(({ id }) => id === id)
+   const challengeAnswer = (id: string, response: string): boolean => {
+      const data = state.find((item) => item.id === id)
       const answer = data?.Answers[data?.index || 0]
 
-      if (answer === response) {
+      if (answer?.toLowerCase() === response.toLowerCase()) {
          setCounterAnswers(item => ({
             ...item,
             correct: item.correct + 1,
          }))
-      } else {
-         setCounterAnswers(item => ({
-            ...item,
-            incorrect: item.incorrect + 1,
-         }))
+         return true
       }
-
+      setCounterAnswers(item => ({
+         ...item,
+         incorrect: item.incorrect + 1,
+      }))
+      return false
+   }
+   const challengeDispatch = (id: string) => {
       dispatch({
          type: "CHALLEMGE_ANSWERED",
          payload: {
@@ -95,6 +101,7 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
          updateFetchDay,
          updateFetchCategory,
          challengeAnswer,
+         challengeDispatch,
       }}>
          <IsLoadingContext.Provider value={isLoading}>
             <CounterAnswersContext.Provider value={counterAnswers}>
@@ -105,5 +112,4 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
    )
 }
 
-// Custom hooks para consumir los contextos individuales
 

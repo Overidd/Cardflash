@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import { Iuser } from '../../utils'
-import { GalleryHorizontalEnd } from "lucide-react"
+import { GalleryHorizontalEnd,  } from "lucide-react"
 import { ButtonAction } from "../bottoms"
 import { Card } from "../cards"
 
@@ -15,11 +15,11 @@ export const ControllerCardPast = ({ handelComplete, handelOmit, className }: Id
    return (
       <Card
          className={`grid grid-rows-[50%_50%] ${className}`}
-         bgColor={'rangeBlueAndSky'}
+         bgColor={'bgColorSegundary'}
       >
          <>
             <div className="text-center place-self-center space-y-2">
-               <h2 className="text-2xl font-semibold">!Hola {user.name}¡</h2>
+               <h2 className="text-xl font-semibold">!Hola {user.name}¡</h2>
                <p>Tienes card pedientes de dias anteriores</p>
                <p>¿Quieres completar💪?</p>
             </div>
@@ -55,7 +55,7 @@ export const ControllerCardToday = ({ handelStart, handelChallend, className }: 
    return (
       <Card
          className={`grid grid-rows-[50%_50%] ${className}`}
-         bgColor={'rangeGreenAndSky'}
+         bgColor={'bgColorSegundary'}
       >
          <>
             <div className="text-center place-self-center space-y-2">
@@ -96,7 +96,7 @@ export const ControllerCardIsPast = ({ handelComplete, handelChallend, className
    return (
       <Card
          className={`grid grid-rows-[50%_50%] ${className}`}
-         bgColor={'rangeGreenAndSky'}
+         bgColor={'bgColorSegundary'}
       >
          <>
             <div className="text-center place-self-center space-y-2">
@@ -136,7 +136,7 @@ export const ControllerCardFinish = ({ handelChallend, isFinished, className }: 
    return (
       <Card
          className={`grid grid-rows-[50%_50%] ${className}`}
-         bgColor={'rangeGreenAndSky'}
+         bgColor={'bgColorSegundary'}
       >
          <>
             <div className="text-center place-self-center space-y-2">

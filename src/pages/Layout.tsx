@@ -4,7 +4,7 @@ import { ProfileUser } from '../components/profile';
 import { UserModal } from '../components/modals';
 import { toggleModal } from '../helpers';
 import { useRegisterUser } from '../hooks';
-import { ProviderCard } from '../contexts';
+import { ProviderCard, ProviderChallenge } from '../contexts';
 
 export const Layout = () => {
    const { changeFrom, user } = useRegisterUser()
@@ -16,13 +16,15 @@ export const Layout = () => {
    }, [user])
 
    return (
-      <div className='min-h-[100dvh] text-white overflow-hidden'>
+      <div className='min-h-[100dvh] text-white overflow-hidden bg-bgColorPrimary'>
          <UserModal changeFrom={changeFrom} />
          <header className='mt-2 mr-2'>
             <ProfileUser />
          </header>
          <ProviderCard>
-            <Outlet context={{ name: user.name }} />
+            <ProviderChallenge>
+               <Outlet context={{ name: user.name }} />
+            </ProviderChallenge>
          </ProviderCard>
       </div>
    )
