@@ -59,7 +59,7 @@ const UserName = ({ setContinueRegister, className }: UserNameProps) => {
    return (
       <fieldset className={`space-y-4 text-center ${className}`}>
          <motion.input
-            className={`block border-b-2 p-2 outline-none text-center font-semibold bg-bgColor rounded-md ${shake ? 'placeholder:text-red border-b-red' : ''}`}
+            className={`bg-bgColorPrimary block border-b-2 p-2 outline-none text-center font-semibold ${shake ? 'placeholder:text-red border-b-red' : ''}`}
             type="text"
             name="name"
             autoFocus
@@ -116,7 +116,7 @@ const UserDayConfig = ({ className }: UserDayConfigPros) => {
             <>
                <motion.input
                   key={1}
-                  className={`border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11 ${shake ? 'border-[#ff5757] placeholder:text-red' : ''}`}
+                  className={`bg-bgColorPrimary border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11 ${shake ? 'border-[#ff5757] placeholder:text-red' : ''}`}
                   name={String('numInput' + 1)}
                   type='number'
                   placeholder={String(1)}
@@ -129,7 +129,7 @@ const UserDayConfig = ({ className }: UserDayConfigPros) => {
                   Array.from({ length: numInput.num }, (_, index) => index + 2).map((index) => (
                      <input
                         key={index}
-                        className="border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11"
+                        className="bg-bgColorPrimary border-2 border-gray-400 bg-bgColor p-2 outline-none text-center w-11"
                         type='number'
                         name={String('numInput' + index)}
                         // placeholder={String(index)}
