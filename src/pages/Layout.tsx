@@ -16,7 +16,7 @@ export const Layout = () => {
    }, [user])
 
    return (
-      <div className='font-thin min-h-[100dvh] text-white overflow-hidden bg-bgColorPrimary'>
+      <div className='font-semibold min-h-[100dvh] text-white overflow-hidden bg-bgColorPrimary'>
          <UserModal changeFrom={changeFrom} />
          <header>
             <ProfileUser />
