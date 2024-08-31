@@ -1,5 +1,5 @@
 import { useCart } from "../../contexts"
-import { CardQuestion } from "./CardQuestion"
+import { CardQuestion } from "."
 
 interface IshowTodayProps {
   isCardPast: () => void

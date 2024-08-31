@@ -1,7 +1,7 @@
-import { toggleModal } from "../../helpers"
-import { ButtonCategory } from "../bottoms"
-import { Modal } from "./Modal"
 import { StickyNote } from "lucide-react"
+import { ButtonCategory } from "../bottoms"
+import { toggleModal } from "../../helpers"
+import { Modal } from "./Modal"
 
 const data = [
    {

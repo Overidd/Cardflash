@@ -1,6 +1,4 @@
 import { DialogHTMLAttributes, PropsWithChildren } from "react";
-// import { toggleModal } from '../../helpers'
-// import { X } from 'lucide-react';
 
 interface IProps extends PropsWithChildren, DialogHTMLAttributes<HTMLDialogElement> {
    id: string;
@@ -17,13 +15,6 @@ export const Modal = ({ children, id, ...props }: IProps) => {
          {...props}
       >
          <div className="rounded-md relative flex justify-center items-center h-full">
-            {/* <button
-               type="button"
-               className="absolute top-2 right-2 text-2xl cursor-pointer z-30"
-               onClick={() => toggleModal.close(id)} // Asegúrate de tener la función para cerrar el modal
-            >
-               <X />
-            </button> */}
             {children}
          </div>
       </dialog>

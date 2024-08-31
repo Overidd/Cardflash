@@ -10,27 +10,3 @@ export const useCart = () => {
    }
    return state
 }
-// export const useCartDay = () => {
-//    const { state, questionAnsweredDay } = useContext(ContextCard);
-
-//    if (!state) {
-//       throw new Error("useCartDay debe estar usado dentro de un ProviderCard");
-//    }
-
-//    return {
-//       cardDate: state.cardDay,
-//       questionAnsweredDay: questionAnsweredDay,
-//    }
-// }
-
-// export const useCartDayLast = () => {
-//    const { state, questionAnsweredDayLast } = useContext(ContextCard)
-//    if (!state) {
-//       throw new Error("useCartDayLast debe estar usado dentro de un ProviderCard");
-//    }
-
-//    return {
-//       cardDate: state.cardDayPast,
-//       questionAnsweredDayLast: questionAnsweredDayLast,
-//    }
-// }

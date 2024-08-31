@@ -1,9 +1,9 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Modal } from '.'
 import { ButtonAction } from '../bottoms'
 import { useValidInput } from '../../hooks'
+import { Modal } from '.'
 
 type userModalProps = {
    changeFrom: (e: React.FormEvent<HTMLFormElement>, numForm: number) => void

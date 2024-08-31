@@ -32,7 +32,3 @@ export const ButtonAction = ({ className, bgColor, children, text = 'texto boton
       </button>
    )
 }
-{/* <div class="buton-container">
-<button class="btn btn-1">BUTTON</button>
-</div> */}
-

@@ -1,8 +1,7 @@
-import { useEffect } from "react"
-import { useChallenge, useLoadingChallenge } from "../../contexts"
-import { Card } from "./Card"
 import { motion } from 'framer-motion';
 import { LoaderCircle } from 'lucide-react'
+import { useChallenge, useLoadingChallenge } from "../../contexts"
+import { Card } from "."
 // import { ButtonContinue } from "../bottoms"
 
 interface CardChallendProps {
@@ -10,14 +9,9 @@ interface CardChallendProps {
    conpletedChallend: () => void;
 }
 export const CardChallend = ({ className, conpletedChallend }: CardChallendProps) => {
-   const { state, updateFetchDay, challengeAnswer, challengeDispatch } = useChallenge()
+   const { state, challengeAnswer, challengeDispatch } = useChallenge()
    const isLoading = useLoadingChallenge()
    // const [shake, setShake] = useState(false)
-
-   useEffect(() => {
-      updateFetchDay()
-   }, [])
-
    if (state.length === 0) {
       return
    }
@@ -52,9 +46,7 @@ export const CardChallend = ({ className, conpletedChallend }: CardChallendProps
       }
       conpletedChallend()
    };
-   // const handleContinue = () => {
-   //    challengeDispatch(id)
-   // }
+
    return (
       <Card bgColor="greySegundary"
          className={`${className} relative`}
@@ -66,7 +58,7 @@ export const CardChallend = ({ className, conpletedChallend }: CardChallendProps
                   className="animate-spin absolute inset-0 m-auto"
                />
                : <motion.div
-                  className={`p-4 grid grid-rows-[45%_55%] h-full`}
+                  className={`text-[#fffe] p-4 grid grid-rows-[50%_50%] md:grid-rows-[45%_55%] h-full`}
                   initial={{ x: '45%', opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ type: 'spring', stiffness: 50, duration: 0.5 }}
@@ -122,4 +114,3 @@ const SelectResponse = ({ text, isCorrectSelect }: SelectProps) => {
       </button>
    )
 };
-

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, Icolor } from "./Card";
-import { ButtonResponse } from "../bottoms/ButtonResponse";
+import { ButtonResponse } from "../bottoms";
 
 type Ipropite = {
    select: string,
@@ -70,7 +70,7 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
                         })
                      }
                   </div>
-                  <div className="text-center text-xl">
+                  <div className="w-[90%] mx-auto text-center md:text-xl">
                      <p>{question}</p>
                   </div>
                </div>
@@ -88,7 +88,9 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
                      text="link"
                      onClick={openlink}
                   />
-                  <p className="w-[90%] mx-auto text-center text-base text-balance place-content-center">{answer}</p>
+                  <p className="w-[90%] mx-auto text-center text-base text-balance place-content-center">
+                     {answer}
+                  </p>
                   <div className="text-center space-x-4">
                      <ButtonResponse
                         bgColor="incorrect"

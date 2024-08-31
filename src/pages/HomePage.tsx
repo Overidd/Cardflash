@@ -1,206 +1,33 @@
-import { useState } from "react"
-import confetti from 'canvas-confetti';
+import { CardShowpastday, CardshowToday, CardChallend } from "../components/cards"
 import { ControllerCardFinish, ControllerCardIsPast, ControllerCardPast, ControllerCardToday } from "../components/controllersCard"
-import { useCart, useChallenge, useCounterAnswers } from "../contexts"
-import { CardShowpastday, CardshowToday } from "../components/cards"
-import { CardChallend } from "../components/cards/CardChallend";
 import { ChallengModal } from "../components/modals";
-import { toggleModal } from '../helpers';
-
-let isFinishedCard = false
-const handleConfetti = () => {
-   confetti({
-      particleCount: 130,
-      startVelocity: 40,
-      spread: 360,
-      origin: {
-         x: 0.5,
-         y: 0.5,
-      },
-   });
-};
-
-let percentageToday = 0
-let percentagePast = 0
-let percentageChalleng = 0
-
-let isbarToday = false
-let isbarFinish = false
-let isbarChallenge = false
+import { useControllerCard, usePercemtage } from "../hooks";
 
 export const HomePage = () => {
-   const { state } = useCart()
-   const { state: stateChallenge, updateFetchCategory } = useChallenge()
+   const { state,
+      stateChallenge,
+      controllerCard,
+      openCard,
+      handelStart,
+      handelComplete,
+      handelChallend,
+      startChallend,
+      handelOmit,
+      isCardToday,
+      isCardPast,
+      conpletedChallend,
+      isFinishedCard,
+      isbarToday,
+      isbarFinish,
+      isbarChallenge
+   } = useControllerCard()
 
-   const [numState] = useState({
-      numToday: state.cardDay.length,
-      numPast: state.cardDayPast.length,
-   })
-
-   const [controllerCard, setControllerCard] = useState({
-      open_controllerCardPast: state.cardDayPast.length > 0 && true,// en el caso de que si existe las card pasadas se activa el controllador
-      open_controllerCardToday: state.cardDayPast.length === 0 && state.cardDay.length > 0 && true, // en el caso de que solo exista card de hoy se activa el controllador
-      open_controllerCardIsPast: false,
-      open_controllerCardFinish: state.cardDayPast.length === 0 && state.cardDay.length === 0 ? true : false,
-   })
-
-   const [openCard, setopenCard] = useState({
-      open_cardPast: false,
-      open_cardToday: false,
-      open_cardChallenge: false,
-   })
-
-   const closeCardController = () => {
-      setControllerCard(() => ({
-         open_controllerCardPast: false,
-         open_controllerCardToday: false,
-         open_controllerCardIsPast: false,
-         open_controllerCardFinish: false,
-      }))
-   }
-
-   const handelStart = () => {
-      setopenCard(() => ({
-         open_cardPast: false,
-         open_cardToday: true,
-         open_cardChallenge: false,
-      }))
-      closeCardController()
-      isbarToday = true
-      isbarFinish = false
-      isbarChallenge = false
-   }
-
-   const handelComplete = () => {
-      setopenCard(() => ({
-         open_cardPast: true,
-         open_cardToday: false,
-         open_cardChallenge: false,
-      }))
-      closeCardController()
-      isbarToday = false
-      isbarFinish = true
-      isbarChallenge = false
-   }
-
-   const handelChallend = () => {
-      toggleModal.show('categorias')
-   }
-   const startChallend = (category: string) => {
-      updateFetchCategory(category)
-      setopenCard(() => ({
-         open_cardPast: false,
-         open_cardToday: false,
-         open_cardChallenge: true,
-      }))
-      closeCardController()
-      isbarFinish = false
-      isbarToday = false
-      isbarChallenge = true
-   }
-
-
-   const handelOmit = () => {
-      setControllerCard(() => ({
-         open_controllerCardPast: false,
-         open_controllerCardToday: true,
-         open_controllerCardIsPast: false,
-         open_controllerCardFinish: false,
-      }))
-   }
-
-   // console.log(controllerCard)
-   const isCardToday = () => {
-      if (state.cardDay.length === 1) {
-         handleConfetti()
-         setopenCard(() => ({
-            open_cardToday: false,
-            open_cardPast: false,
-            open_cardChallenge: false,
-         }))
-
-         if (state.cardDayPast.length > 0) {
-            setControllerCard(() => ({
-               open_controllerCardPast: false,
-               open_controllerCardToday: false,
-               open_controllerCardIsPast: true,
-               open_controllerCardFinish: false,
-            }))
-            return
-         }
-
-         setControllerCard(() => ({
-            open_controllerCardPast: false,
-            open_controllerCardToday: false,
-            open_controllerCardIsPast: false,
-            open_controllerCardFinish: true,
-         }))
-         isFinishedCard = true
-      }
-   }
-   const isCardPast = () => {
-      if (state.cardDayPast.length === 1) {
-         handleConfetti()
-         setopenCard(() => ({
-            open_cardToday: false,
-            open_cardPast: false,
-            open_cardChallenge: false,
-         }))
-         if (state.cardDay.length === 0) {
-            setControllerCard(() => ({
-               open_controllerCardPast: false,
-               open_controllerCardToday: false,
-               open_controllerCardIsPast: false,
-               open_controllerCardFinish: true,
-            }))
-            isFinishedCard = true
-            return
-         }
-
-         setControllerCard(() => ({
-            open_controllerCardPast: false,
-            open_controllerCardToday: true,
-            open_controllerCardIsPast: false,
-            open_controllerCardFinish: false,
-         }))
-      }
-   }
-
-   const conpletedChallend = () => {
-      if (stateChallenge.length === 1) {
-         handleConfetti()
-         setopenCard(() => ({
-            open_cardToday: false,
-            open_cardPast: false,
-            open_cardChallenge: false,
-         }))
-         if (state.cardDay.length > 0) {
-            console.log(' hay cardDay ')
-            setControllerCard(() => ({
-               open_controllerCardPast: false,
-               open_controllerCardToday: true,
-               open_controllerCardIsPast: false,
-               open_controllerCardFinish: false,
-            }))
-            return
-         }
-         setControllerCard(() => ({
-            open_controllerCardPast: false,
-            open_controllerCardToday: false,
-            open_controllerCardIsPast: false,
-            open_controllerCardFinish: true,
-         }))
-      }
-   }
-
-   const { total } = useCounterAnswers()
-   percentageToday = Math.round((((numState.numToday - state.cardDay.length) / numState.numToday) * 100))
-   percentagePast = Math.round((((numState.numPast - state.cardDayPast.length) / numState.numPast) * 100))
-   percentageChalleng = Math.round((((total - stateChallenge.length) / total) * 100))
+   const { percentageChalleng, percentagePast, percentageToday } = usePercemtage(state, stateChallenge)
 
    return (
-      <main className="min-h-[calc(100vh-4rem)] w-fit mx-auto flex justify-center items-center">
-         <section className="grid grid-rows-[3rem_1.3rem_minmax(0,_1fr)] gap-3">
+      <main className="w-[90%] min-h-[calc(100vh-4rem)] md:w-fit mx-auto flex justify-center items-center">
+         <section className="w-[100%] grid grid-rows-[3rem_1.3rem_minmax(0,_1fr)] gap-3">
+
             <div className="row-start-1 text-[#fff] text-6xl font-semibold place-self-center place-content-center">
                <h3 className={`${openCard.open_cardToday ? 'block' : 'hidden'}`}>
                   {state.cardDay.length}

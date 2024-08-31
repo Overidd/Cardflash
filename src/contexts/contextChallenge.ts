@@ -7,12 +7,6 @@ type ContectChallengeType = {
    challengeAnswer: (id: string, response: string) => boolean;
    challengeDispatch: (id: string) => void;
    state: ChallegeRandom[];
-   // isLoading: boolean;
-   // counterAnswers: {
-   //    correct: number,
-   //    incorrect: number,
-   //    total: number,
-   // };
 }
 
 const defaultState = {

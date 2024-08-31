@@ -1,12 +1,10 @@
-import { ReactNode, useReducer, useState } from "react";
 import { ContextChallenge, CounterAnswersContext, IsLoadingContext, challegeReduce } from "./";
+import { ReactNode, useReducer, useState } from "react";
 import { getCardCategory, getCardRandom } from "../services";
 import { ChallegeRandom } from "../utils";
 import { dataChallenge } from "../data/dataChallenge";
 
-const initialState: ChallegeRandom[] = [
-
-];
+const initialState: ChallegeRandom[] = dataChallenge;
 
 type ProviderProps = {
    children: ReactNode;
@@ -23,23 +21,23 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
 
    const updateFetchDay = async () => {
       setIsLoading(true)
-      // const { data, status } = await getCardRandom()
+      const { data, status } = await getCardRandom()
       setIsLoading(false)
 
-      // if (!status) {
-      // return status
-      // }
+      if (!status) {
+         return status
+      }
 
       dispatch({
          type: "SET_CARDS",
          payload: {
-            data: dataChallenge,
+            data: data,
             numQueries: 4,
          }
       })
       setCounterAnswers(item => ({
          ...item,
-         total: dataChallenge.length,
+         total: data.length,
       }))
 
       return true
@@ -111,5 +109,3 @@ export const ProviderChallenge = ({ children }: ProviderProps) => {
       </ContextChallenge.Provider>
    )
 }
-
-

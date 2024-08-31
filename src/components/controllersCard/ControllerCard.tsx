@@ -1,9 +1,9 @@
-import { useOutletContext } from 'react-router-dom'
-import { Iuser } from '../../utils'
 import { GalleryHorizontalEnd, } from "lucide-react"
-import { ButtonAction } from "../bottoms"
-import { Card } from "../cards"
+import { useOutletContext } from 'react-router-dom'
 import { motion } from 'framer-motion';
+import { ButtonAction } from "../bottoms"
+import { Iuser } from '../../utils'
+import { Card } from "../cards"
 
 // ControllerDayPast se cuando tienes cards pendientes de dias anteriores
 interface IdayPastProps {
