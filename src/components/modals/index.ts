@@ -1,2 +1,3 @@
 export * from './UserModal';
-export * from './modal';
+export * from './Modal';
+export * from './ChallengModal';

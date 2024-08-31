@@ -1,14 +1,17 @@
 import { useEffect } from "react"
-import { useChallenge } from "../../contexts"
+import { useChallenge, useLoadingChallenge } from "../../contexts"
 import { Card } from "./Card"
 import { motion } from 'framer-motion';
+import { LoaderCircle } from 'lucide-react'
 // import { ButtonContinue } from "../bottoms"
 
 interface CardChallendProps {
    className?: string;
+   conpletedChallend: () => void;
 }
-export const CardChallend = ({ className }: CardChallendProps) => {
+export const CardChallend = ({ className, conpletedChallend }: CardChallendProps) => {
    const { state, updateFetchDay, challengeAnswer, challengeDispatch } = useChallenge()
+   const isLoading = useLoadingChallenge()
    // const [shake, setShake] = useState(false)
 
    useEffect(() => {
@@ -16,7 +19,7 @@ export const CardChallend = ({ className }: CardChallendProps) => {
    }, [])
 
    if (state.length === 0) {
-      return 
+      return
    }
 
    const { id, Question, Answers, index } = state[0];
@@ -47,45 +50,53 @@ export const CardChallend = ({ className }: CardChallendProps) => {
          const button = childrens[i] as HTMLButtonElement;
          button.disabled = true;
       }
+      conpletedChallend()
    };
-
-   console.log('first')
    // const handleContinue = () => {
    //    challengeDispatch(id)
    // }
    return (
-      <Card bgColor="greySegundary"  className={className}>
-         <motion.div
-            className={`p-4 grid grid-rows-[45%_55%] h-full`}
-            initial={{ x: '45%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ type: 'spring', stiffness: 50, duration: 0.5 }}
-            key={id}
-         >
-            <p className="text-center self-center">
-               {Question}
-            </p>
+      <Card bgColor="greySegundary"
+         className={`${className} relative`}
+      >
+         {
+            isLoading
+               ? <LoaderCircle
+                  size={60}
+                  className="animate-spin absolute inset-0 m-auto"
+               />
+               : <motion.div
+                  className={`p-4 grid grid-rows-[45%_55%] h-full`}
+                  initial={{ x: '45%', opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 50, duration: 0.5 }}
+                  key={id}
+               >
+                  <p className="text-center self-center">
+                     {Question}
+                  </p>
 
-            <div
-               className="grid grid-cols-2 gap-3"
-            >
-               {
-                  Answers.map((data, index) => (
-                     <SelectResponse
-                        key={index}
-                        text={data}
-                        isCorrectSelect={isCorrectSelect}
-                     />
-                  ))
-               }
-            </div>
-            {/* {
+                  <div
+                     className="grid grid-cols-2 gap-3"
+                  >
+                     {
+                        Answers.map((data, index) => (
+                           <SelectResponse
+                              key={index}
+                              text={data}
+                              isCorrectSelect={isCorrectSelect}
+                           />
+                        ))
+                     }
+                  </div>
+                  {/* {
                shake &&
                <ButtonContinue
                   handleContinue={handleContinue}
                />
             } */}
-         </motion.div>
+               </motion.div>
+         }
       </Card>
    )
 }

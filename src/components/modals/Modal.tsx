@@ -1,8 +1,8 @@
-import { PropsWithChildren } from "react";
+import { DialogHTMLAttributes, PropsWithChildren } from "react";
 // import { toggleModal } from '../../helpers'
 // import { X } from 'lucide-react';
 
-interface IProps extends PropsWithChildren {
+interface IProps extends PropsWithChildren, DialogHTMLAttributes<HTMLDialogElement> {
    id: string;
 }
 

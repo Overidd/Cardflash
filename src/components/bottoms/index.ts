@@ -1,2 +1,2 @@
 export * from './ButtonAction';
-export * from './ButtonContinue';
+export * from './ButtonCategory';

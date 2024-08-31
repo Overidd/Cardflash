@@ -13,9 +13,7 @@ export const useChallenge = () => {
 
 export const useLoadingChallenge = () => {
    const isLoading = useContext(IsLoadingContext)
-   if (!isLoading) {
-      throw new Error("useLoadingChallenge debe estar usado dentro de un IsLoadingContext");
-   }
+
    return isLoading;
 };
 export const useCounterAnswers = () => {
@@ -27,7 +25,7 @@ export const useCounterAnswers = () => {
 };
 
 
-// export const useLoadingChallenge = () => {
+// export const usize={17}seLoadingChallenge = () => {
 //    const {isLoading} = useContext(ContextChallenge)
 //    return isLoading
 // }

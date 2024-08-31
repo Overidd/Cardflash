@@ -61,11 +61,13 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
                >
                   <div className="space-x-2 absolute top-3 left-3 text-[0.9rem] font-semibold">
                      {
-                        properties.map(({ color, select, id }) => (
-                           <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md bg-${color} border-2 border-[#fff4]`}>
-                              {select}
-                           </span>
-                        ))
+                        properties.map(({ color, select, id }) => {
+                           if (select == null) return
+                           return (
+                              <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md bg-${color} border-2 border-[#fff4]`}>
+                                 {select}
+                              </span>)
+                        })
                      }
                   </div>
                   <div className="text-center text-xl">

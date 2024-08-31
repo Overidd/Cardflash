@@ -4,6 +4,8 @@ import { ControllerCardFinish, ControllerCardIsPast, ControllerCardPast, Control
 import { useCart, useChallenge, useCounterAnswers } from "../contexts"
 import { CardShowpastday, CardshowToday } from "../components/cards"
 import { CardChallend } from "../components/cards/CardChallend";
+import { ChallengModal } from "../components/modals";
+import { toggleModal } from '../helpers';
 
 let isFinishedCard = false
 const handleConfetti = () => {
@@ -28,7 +30,7 @@ let isbarChallenge = false
 
 export const HomePage = () => {
    const { state } = useCart()
-   const { state: stateChallenge } = useChallenge()
+   const { state: stateChallenge, updateFetchCategory } = useChallenge()
 
    const [numState, setNumState] = useState({
       numToday: state.cardDay.length,
@@ -82,16 +84,21 @@ export const HomePage = () => {
    }
 
    const handelChallend = () => {
+      toggleModal.show('categorias')
+   }
+   const startChallend = (category: string) => {
+      updateFetchCategory(category)
       setopenCard(() => ({
          open_cardPast: false,
          open_cardToday: false,
          open_cardChallenge: true,
       }))
       closeCardController()
-      isbarToday = false
       isbarFinish = false
+      isbarToday = false
       isbarChallenge = true
    }
+
 
    const handelOmit = () => {
       setControllerCard(() => ({
@@ -156,9 +163,36 @@ export const HomePage = () => {
             open_controllerCardIsPast: false,
             open_controllerCardFinish: false,
          }))
-
       }
    }
+
+   const conpletedChallend = () => {
+      if (stateChallenge.length === 1) {
+         console.log('conpletedChallend es 0')
+         setopenCard(() => ({
+            open_cardToday: false,
+            open_cardPast: false,
+            open_cardChallenge: false,
+         }))
+         if (state.cardDay.length > 0) {
+            console.log(' hay cardDay ')
+            setControllerCard(() => ({
+               open_controllerCardPast: false,
+               open_controllerCardToday: true,
+               open_controllerCardIsPast: false,
+               open_controllerCardFinish: false,
+            }))
+            return
+         }
+         setControllerCard(() => ({
+            open_controllerCardPast: false,
+            open_controllerCardToday: false,
+            open_controllerCardIsPast: false,
+            open_controllerCardFinish: true,
+         }))
+      }
+   }
+
    const { total } = useCounterAnswers()
    percentageToday = Math.round((((numState.numToday - state.cardDay.length) / numState.numToday) * 100))
    percentagePast = Math.round((((numState.numPast - state.cardDayPast.length) / numState.numPast) * 100))
@@ -166,8 +200,7 @@ export const HomePage = () => {
 
    return (
       <main className="min-h-[calc(100vh-4rem)] w-fit mx-auto flex justify-center items-center">
-
-         <section className="grid grid-rows-[4rem_1.3rem_minmax(0,_1fr)] gap-3">
+         <section className="grid grid-rows-[3rem_1.3rem_minmax(0,_1fr)] gap-3">
             <div className="row-start-1 text-[#fff] text-6xl font-semibold place-self-center place-content-center">
                <h3 className={`${openCard.open_cardToday ? 'block' : 'hidden'}`}>
                   {state.cardDay.length}
@@ -178,7 +211,6 @@ export const HomePage = () => {
                <h3 className={`${openCard.open_cardChallenge ? 'block' : 'hidden'}`}>
                   {stateChallenge.length}
                </h3>
-               {/* stateChallenge */}
             </div>
             <div className="relative row-start-2 text-base bg-slate-600 rounded-md overflow-hidden">
                {isbarToday && (
@@ -249,9 +281,14 @@ export const HomePage = () => {
                {
                   // openCard.open_cardChallenge &&
                   <CardChallend
+                     conpletedChallend={conpletedChallend}
                      className={`${openCard.open_cardChallenge ? 'grid' : 'hidden'}`}
                   />
                }
+               {
+                  <ChallengModal startChallend={startChallend} />
+               }
+
             </div>
          </section>
       </main >
