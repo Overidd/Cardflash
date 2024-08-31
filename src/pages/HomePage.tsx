@@ -115,7 +115,6 @@ export const HomePage = () => {
                {
                   <ChallengModal startChallend={startChallend} />
                }
-
             </div>
          </section>
       </main >

@@ -11,7 +11,7 @@ interface CardChallendProps {
 export const CardChallend = ({ className, conpletedChallend }: CardChallendProps) => {
    const { state, challengeAnswer, challengeDispatch } = useChallenge()
    const isLoading = useLoadingChallenge()
-   // const [shake, setShake] = useState(false)
+
    if (state.length === 0) {
       return
    }
