@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ContextCard } from "./contextCard";
+import { ContextCard, contextControllerCard } from "./contextCard";
 
 
 export const useCart = () => {
@@ -9,4 +9,13 @@ export const useCart = () => {
       console.log("useCartDay debe estar usado dentro de un ProviderCard");
    }
    return state
+}
+
+export const useController = () => {
+   const { controllerCard, setControllerCard } = useContext(contextControllerCard);
+
+   return {
+      controllerCard,
+      setControllerCard,
+   }
 }

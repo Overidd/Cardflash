@@ -10,7 +10,7 @@ export default {
         grey: '#a6a6a6',
         greySegundary: '#2e3856',
         red: '#ff5757',
-        orange: '#ff914d',
+        yellow: '#ff914d',
         green: '#00bf63',
         primaryBlue: '#0454bf',
         secondaryBlue: '#3066cf',
@@ -19,7 +19,7 @@ export default {
         bgColorPrimary: "#0a092d",
         bgColorSegundary: "#131742",
         bgColorTertiary: "#121f4b"
-        
+
       },
       backgroundImage: {
         // rangeBlueAndSky: 'linear-gradient(90deg, #104882 0%, #005dd8 100%)',

@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, ReactElement } from "react";
 const colors = {
   incorrect: 'bg-red',
-  regular: 'bg-orange',
+  regular: 'bg-yellow',
   correct: 'bg-green',
   link: ' bg-blue-600',
 }

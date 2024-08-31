@@ -20,13 +20,18 @@ export const challegeReduce = (state: ChallegeRandom[], action: challengeAction)
          const response = action.payload.data.map(({ Answers }) => {
             return Answers[0]
          }, [])
-         console.log(response)
 
 
          const newState = action.payload.data.map((item) => {
             const questionRandom: string[] = []
 
             let i = 0
+
+            if (response.length === 1) {
+               return {
+                  ...item,
+               }
+            }
 
             while (i < (action.payload.numQueries - 1)) {
                const randomIndex = Math.floor(Math.random() * response.length)
@@ -47,7 +52,6 @@ export const challegeReduce = (state: ChallegeRandom[], action: challengeAction)
                index: indexRandom,
             }
          })
-         console.log(newState)
          return newState
       }
 

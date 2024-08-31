@@ -2,9 +2,12 @@ import { CardShowpastday, CardshowToday, CardChallend } from "../components/card
 import { ControllerCardFinish, ControllerCardIsPast, ControllerCardPast, ControllerCardToday } from "../components/controllersCard"
 import { ChallengModal } from "../components/modals";
 import { useControllerCard, usePercemtage } from "../hooks";
+import { LoaderCircle } from 'lucide-react';
+
 
 export const HomePage = () => {
    const { state,
+      isLoading,
       stateChallenge,
       controllerCard,
       openCard,
@@ -23,6 +26,17 @@ export const HomePage = () => {
    } = useControllerCard()
 
    const { percentageChalleng, percentagePast, percentageToday } = usePercemtage(state, stateChallenge)
+
+   if (isLoading) {
+      return (
+         <main className="w-[90%] min-h-[calc(100vh-4rem)] md:w-fit mx-auto flex justify-center items-center">
+            <LoaderCircle
+               size={40}
+               className="animate-spin"
+            />
+         </main>
+      )
+   }
 
    return (
       <main className="w-[90%] min-h-[calc(100vh-4rem)] md:w-fit mx-auto flex justify-center items-center">

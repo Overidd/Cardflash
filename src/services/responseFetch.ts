@@ -27,9 +27,6 @@ export const getTwoCardType = async () => {
          return new Date(`${month}-${day}-${year}`).getDate() < new Date().getDate();
       });
 
-      // console.log(data, '---')
-      // console.log(cardDay)
-      // console.log(cardDayPast)
       return {
          cardDay,
          cardDayPast,

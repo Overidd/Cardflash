@@ -1,6 +1,6 @@
 import confetti from 'canvas-confetti';
 import { useState } from 'react';
-import { useCart, useChallenge } from '../contexts';
+import { useCart, useChallenge, useController } from '../contexts';
 import { toggleModal } from '../helpers';
 
 const handleConfetti = () => {
@@ -21,15 +21,10 @@ let isbarFinish = false
 let isbarChallenge = false
 
 export const useControllerCard = () => {
-   const { state } = useCart()
+   const { state, isLoading } = useCart()
+   const { controllerCard, setControllerCard } = useController()
    const { state: stateChallenge, updateFetchCategory } = useChallenge()
 
-   const [controllerCard, setControllerCard] = useState({
-      open_controllerCardPast: state.cardDayPast.length > 0 && true,// en el caso de que si existe las card pasadas se activa el controllador
-      open_controllerCardToday: state.cardDayPast.length === 0 && state.cardDay.length > 0 && true, // en el caso de que solo exista card de hoy se activa el controllador
-      open_controllerCardIsPast: false,
-      open_controllerCardFinish: state.cardDayPast.length === 0 && state.cardDay.length === 0 ? true : false,
-   })
 
    const [openCard, setopenCard] = useState({
       open_cardPast: false,
@@ -160,7 +155,6 @@ export const useControllerCard = () => {
             open_cardChallenge: false,
          }))
          if (state.cardDay.length > 0) {
-            console.log(' hay cardDay ')
             setControllerCard(() => ({
                open_controllerCardPast: false,
                open_controllerCardToday: true,
@@ -179,6 +173,7 @@ export const useControllerCard = () => {
    }
    return {
       state,
+      isLoading,
       stateChallenge,
       controllerCard,
       openCard,

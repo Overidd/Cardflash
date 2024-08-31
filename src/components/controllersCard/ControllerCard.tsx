@@ -144,7 +144,6 @@ interface IdayFinishProps {
    className?: string;
 }
 export const ControllerCardFinish = ({ handelChallend, isFinished, className }: IdayFinishProps) => {
-   console.log(isFinished)
    return (
       <Card
          bgColor={'bgColorSegundary'}

@@ -10,9 +10,7 @@ export const CardShowpastday = ({ isCardPast }: IshowTodayProps) => {
   if (state.cardDayPast.length === 0) {
     return <p className="text-black">No hay tarjetas disponibles para mostrar.</p>
   }
-  const { properties: { Question, Answer, Category, Theme }, id } = state.cardDayPast[0]
-
-  console.log(state)
+  const { properties: { Question, Answer, Category, Theme, Status }, id } = state.cardDayPast[0]
 
   return (
     <CardQuestion
@@ -22,6 +20,7 @@ export const CardShowpastday = ({ isCardPast }: IshowTodayProps) => {
       properties={[{ ...Category }, { ...Theme }]}
       link={Answer.link || ''}
       questionAnswer={questionAnsweredDayLast}
+      statusColor={Status.color}
       id={id}
       isCard={isCardPast}
     />

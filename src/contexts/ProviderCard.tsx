@@ -1,10 +1,10 @@
-import { useReducer, ReactNode, useEffect } from 'react'
-import { ContextCard, cardReducer, ACTION_TYPE } from '.'
+import { useReducer, ReactNode, useEffect, useState } from 'react'
+import { ContextCard, contextControllerCard, cardReducer, ACTION_TYPE } from '.'
 import { getTwoCardType, updateCard } from '../services';
-import { IdataJSONCard } from '../utils';
 // import { dataQuestion } from '../data/dataQuestion';
 
 // const initialState = dataQuestion
+
 const initialState = {
    cardDay: [],
    cardDayPast: [],
@@ -18,27 +18,44 @@ type ProviderProps = {
 // ----
 const localUserDays: number[] = JSON.parse(localStorage.getItem('userDays') || '[]');
 
-
+let numToday = 0
+let numPast = 0
+let isLoading = true
 export const ProviderCard = ({ children }: ProviderProps) => {
    const [state, dispatch] = useReducer(cardReducer, initialState)
 
-   useEffect(() => {
-      getTwoCardType()
-         .then(({ cardDay, cardDayPast }) => {
-            updateDispatchFetch(cardDay, cardDayPast)
-         })
-   }, []);
+   const [controllerCard, setControllerCard] = useState({
+      open_controllerCardPast: false,
+      open_controllerCardToday: false,
+      open_controllerCardIsPast: false,
+      open_controllerCardFinish: false,
+   });
 
-   // Actualizar el estado con los datos obtenidos
-   const updateDispatchFetch = (cardDay: IdataJSONCard[], cardDayPast: IdataJSONCard[]) => {
-      return dispatch({
-         type: 'SET_CARDS',
-         payload: {
-            cardDay,
-            cardDayPast
+
+   useEffect(() => {
+      const fetchCards = async () => {
+         try {
+            const { cardDay, cardDayPast } = await getTwoCardType();
+            dispatch({
+               type: ACTION_TYPE.SET_CARDS,
+               payload: { cardDay, cardDayPast },
+            });
+
+            setControllerCard({
+               open_controllerCardPast: cardDayPast.length > 0,
+               open_controllerCardToday: cardDayPast.length === 0 && cardDay.length > 0,
+               open_controllerCardIsPast: false,
+               open_controllerCardFinish: cardDayPast.length === 0 && cardDay.length === 0,
+            });
+            isLoading = false
+            numToday = cardDay.length
+            numPast = cardDayPast.length
+         } catch (error) {
+            console.error("Error fetching card data:", error);
          }
-      })
-   }
+      };
+      fetchCards();
+   }, []);
 
    const questionAnsweredDay = async (id: string, status: string) => {
       const dataSatate = state.cardDay.find(({ id }) => id === id)
@@ -54,10 +71,10 @@ export const ProviderCard = ({ children }: ProviderProps) => {
          penaltyCorrecet: 1,
       }
 
-      const isDataUpdate = await updateCard(id, data)
-      if (!isDataUpdate) {
-         return false
-      }
+      updateCard(id, data)
+      // if (!isDataUpdate) {
+      //    return false
+      // }
 
       dispatch({
          type: ACTION_TYPE.QUESTION_ANSWERED_DAY,
@@ -65,8 +82,8 @@ export const ProviderCard = ({ children }: ProviderProps) => {
             id: id
          }
       })
-
       return true
+
    }
 
    const questionAnsweredDayLast = async (id: string, status: string) => {
@@ -83,10 +100,10 @@ export const ProviderCard = ({ children }: ProviderProps) => {
          penaltyCorrecet: 1,
       }
       // cardDayPast: IupdatePageDate
-      const isDataUpdate = await updateCard(id, data)
-      if (!isDataUpdate) {
-         return false
-      }
+      updateCard(id, data)
+      // if (!isDataUpdate) {
+      //    return false
+      // }
 
       dispatch({
          type: ACTION_TYPE.QUESTION_ANSWERED_DAY_LAST,
@@ -103,8 +120,16 @@ export const ProviderCard = ({ children }: ProviderProps) => {
          state,
          questionAnsweredDay,
          questionAnsweredDayLast,
+         numToday,
+         numPast,
+         isLoading,
       }}>
-         {children}
+         <contextControllerCard.Provider value={{
+            setControllerCard,
+            controllerCard,
+         }}>
+            {children}
+         </contextControllerCard.Provider>
       </ContextCard.Provider>
    )
 }

@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { useCounterAnswers } from "../contexts"
+import { useCart, useCounterAnswers } from "../contexts"
 import { CardState, ChallegeRandom } from "../utils"
 
 let percentageToday = 0
@@ -9,13 +8,10 @@ let percentageChalleng = 0
 export const usePercemtage = (state: CardState, stateChallenge: ChallegeRandom[]) => {
 
    const { total } = useCounterAnswers()
-   const [numState] = useState({
-      numToday: state.cardDay.length,
-      numPast: state.cardDayPast.length,
-   })
+   const { numPast, numToday } = useCart()
 
-   percentageToday = Math.round((((numState.numToday - state.cardDay.length) / numState.numToday) * 100))
-   percentagePast = Math.round((((numState.numPast - state.cardDayPast.length) / numState.numPast) * 100))
+   percentageToday = Math.round((((numToday - state.cardDay.length) / numToday) * 100))
+   percentagePast = Math.round((((numPast - state.cardDayPast.length) / numPast) * 100))
    percentageChalleng = Math.round((((total - stateChallenge.length) / total) * 100))
 
    return {

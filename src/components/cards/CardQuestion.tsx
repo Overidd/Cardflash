@@ -16,11 +16,12 @@ interface IQuestion {
    properties: Ipropite
    id: string;
    link: string;
-   questionAnswer: (id: string, status: string) => void
+   questionAnswer: (id: string, status: string) => Promise<boolean>
    isCard: () => void
+   statusColor: string,
 }
 
-export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, question, answer, properties }: IQuestion) => {
+export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, question, answer, properties, statusColor }: IQuestion) => {
    const [isFlipped, setIsFlipped] = useState(false);
 
    const handleFlip = () => {
@@ -45,7 +46,7 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
             style={{ perspective: "1000px" }} // Aplicar perspectiva
          >
             <motion.div
-               className="relative w-full h-full bg-red cursor-pointer select-none"
+               className={`relative w-full h-full cursor-pointer select-none bg-${statusColor}`}
                onClick={handleFlip}
                initial={false}
                animate={{ rotateX: isFlipped ? 180 : 0 }}
