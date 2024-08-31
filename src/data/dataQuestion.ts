@@ -66,53 +66,6 @@ export const dataQuestion = {
       },
    ],
    cardDayPast: [
-      {
-         object: "card",
-         id: "3",
-         page_url: "/page3",
-         icon_url: "/icon3.png",
-         database_id: "db3",
-         properties: {
-            Question: { content: "¿Cuál es el punto de ebullición del agua?", link: null },
-            Category: { select: "Ciencia", color: "azul", id: "cat3" },
-            Theme: { select: "Física", color: "morado", id: "theme3" },
-            Status: { name: "Revisado", color: "gris" },
-            Answer: { content: "100°C", link: null },
-            Date: { date: "2024-08-27" },
-            Respontracker: { number: 2 },
-         },
-      },
-      {
-         object: "card",
-         id: "4",
-         page_url: "/page4",
-         icon_url: "/icon4.png",
-         database_id: "db4",
-         properties: {
-            Question: { content: "¿Qué gas es esencial para la respiración humana?", link: null },
-            Category: { select: "Ciencia", color: "verde", id: "cat4" },
-            Theme: { select: "Biología", color: "azul", id: "theme4" },
-            Status: { name: "Revisado", color: "gris" },
-            Answer: { content: "Oxígeno", link: null },
-            Date: { date: "2024-08-26" },
-            Respontracker: { number: 3 },
-         },
-      },
-      {
-         object: "card",
-         id: "7",
-         page_url: "/page7",
-         icon_url: "/icon7.png",
-         database_id: "db7",
-         properties: {
-            Question: { content: "¿Qué es el ADN?", link: null },
-            Category: { select: "Genética", color: "violeta", id: "cat7" },
-            Theme: { select: "Biología Molecular", color: "lila", id: "theme7" },
-            Status: { name: "Revisado", color: "gris" },
-            Answer: { content: "Ácido desoxirribonucleico, que contiene la información genética", link: null },
-            Date: { date: "2024-08-28" },
-            Respontracker: { number: 3 },
-         },
-      },
+  
    ]
 }

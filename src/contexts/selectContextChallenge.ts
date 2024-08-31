@@ -23,27 +23,3 @@ export const useCounterAnswers = () => {
    }
    return counterAnswers;
 };
-
-
-// export const usize={17}seLoadingChallenge = () => {
-//    const {isLoading} = useContext(ContextChallenge)
-//    return isLoading
-// }
-
-// export const useUpdatedChallenge = () => {
-//    const { updateFetchDay, updateFetchCategory } = useContext(ContextChallenge)
-//    return {
-//       updateFetchDay,
-//       updateFetchCategory,
-//    }
-// }
-
-// export const useChallengeAnswer = () => {
-//    const { challengeAnswer } = useContext(ContextChallenge)
-//    return challengeAnswer
-// }
-
-// export const useCounterAnswers = () => {
-//    const {counterAnswers} = useContext(ContextChallenge)
-//    return counterAnswers
-// }

@@ -1,7 +1,7 @@
 import { toggleModal } from "../../helpers"
 import { ButtonCategory } from "../bottoms"
 import { Modal } from "./Modal"
-import { StickyNote} from "lucide-react"
+import { StickyNote } from "lucide-react"
 
 const data = [
    {
@@ -24,7 +24,6 @@ export const ChallengModal = ({ startChallend }: ModalPros) => {
       toggleModal.close('categorias');
       startChallend(button.innerText);
    }
-
    return (
       <Modal
          id="categorias"

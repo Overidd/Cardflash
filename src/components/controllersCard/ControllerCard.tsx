@@ -1,8 +1,9 @@
 import { useOutletContext } from 'react-router-dom'
 import { Iuser } from '../../utils'
-import { GalleryHorizontalEnd,  } from "lucide-react"
+import { GalleryHorizontalEnd, } from "lucide-react"
 import { ButtonAction } from "../bottoms"
 import { Card } from "../cards"
+import { motion } from 'framer-motion';
 
 // ControllerDayPast se cuando tienes cards pendientes de dias anteriores
 interface IdayPastProps {
@@ -14,12 +15,13 @@ export const ControllerCardPast = ({ handelComplete, handelOmit, className }: Id
    const user: Iuser = useOutletContext()
    return (
       <Card
-         className={`grid grid-rows-[50%_50%] ${className}`}
          bgColor={'bgColorSegundary'}
       >
-         <>
+         <div
+            className={`grid grid-rows-[50%_50%] h-full ${className}`}
+         >
             <div className="text-center place-self-center space-y-2">
-               <h2 className="text-xl font-semibold">!Hola {user.name}¡</h2>
+               <h2 className="text-xl font-semibold">¡Hola {user.name}!</h2>
                <p>Tienes card pedientes de dias anteriores</p>
                <p>¿Quieres completar💪?</p>
             </div>
@@ -40,25 +42,33 @@ export const ControllerCardPast = ({ handelComplete, handelOmit, className }: Id
                   onClick={handelOmit}
                />
             </div>
-         </>
+         </div>
       </Card>
    )
 }
 
 // ControllerToday se muestran las cards pendientes de hoy
+
 interface ItodayProps {
    handelStart: () => void;
    handelChallend: () => void;
    className?: string;
+   isToday: boolean;
 }
-export const ControllerCardToday = ({ handelStart, handelChallend, className }: ItodayProps) => {
+
+export const ControllerCardToday = ({ handelStart, handelChallend, className, isToday }: ItodayProps) => {
+   const user: Iuser = useOutletContext();
+
    return (
-      <Card
-         className={`grid grid-rows-[50%_50%] ${className}`}
-         bgColor={'bgColorSegundary'}
-      >
-         <>
+      <Card bgColor={'bgColorSegundary'}>
+         <motion.div
+            className={`grid grid-rows-[50%_50%] h-full ${className}`}
+            initial={!isToday ? { x: '45%', opacity: 0 } : {}}
+            animate={!isToday ? { x: 0, opacity: 1 } : {}}
+            transition={{ type: 'spring', stiffness: 50, duration: 0.3 }}
+         >
             <div className="text-center place-self-center space-y-2">
+               {isToday && <h2 className="text-xl font-semibold">¡Hola {user.name}!</h2>}
                <p>Empieza con tus card de hoy 💪</p>
             </div>
 
@@ -78,12 +88,10 @@ export const ControllerCardToday = ({ handelStart, handelChallend, className }: 
                   onClick={handelChallend}
                />
             </div>
-         </>
-
+         </motion.div>
       </Card>
    )
 }
-
 
 // ControllerDayIsPast se muestra cuando tienes cards pendientes de dias pasados despues de omitir ControllerCardPast y haber completado las card de hoy
 interface IdayIsPastProps {
@@ -95,10 +103,14 @@ interface IdayIsPastProps {
 export const ControllerCardIsPast = ({ handelComplete, handelChallend, className }: IdayIsPastProps) => {
    return (
       <Card
-         className={`grid grid-rows-[50%_50%] ${className}`}
          bgColor={'bgColorSegundary'}
       >
-         <>
+         <motion.div
+            className={`grid grid-rows-[50%_50%] h-full ${className}`}
+            initial={{ x: '45%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 50, duration: 0.3 }}
+         >
             <div className="text-center place-self-center space-y-2">
                <p>Felicidades completaste tus card de hoy🤩</p>
                <p>Tienes card pendientes de dias anteriores complétalas</p>
@@ -120,7 +132,7 @@ export const ControllerCardIsPast = ({ handelComplete, handelChallend, className
                   onClick={handelChallend}
                />
             </div>
-         </>
+         </motion.div>
       </Card>
    )
 }
@@ -135,10 +147,14 @@ export const ControllerCardFinish = ({ handelChallend, isFinished, className }: 
    console.log(isFinished)
    return (
       <Card
-         className={`grid grid-rows-[50%_50%] ${className}`}
          bgColor={'bgColorSegundary'}
       >
-         <>
+         <motion.div
+            className={`grid grid-rows-[50%_50%] h-full ${className}`}
+            initial={{ x: '45%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 50, duration: 0.3 }}
+         >
             <div className="text-center place-self-center space-y-2">
                {
                   !isFinished &&
@@ -160,8 +176,9 @@ export const ControllerCardFinish = ({ handelChallend, isFinished, className }: 
                   <GalleryHorizontalEnd />
                </ButtonAction>
             </div>
-         </>
+         </motion.div>
 
       </Card>
    )
 }
+

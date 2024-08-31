@@ -32,16 +32,16 @@ export const HomePage = () => {
    const { state } = useCart()
    const { state: stateChallenge, updateFetchCategory } = useChallenge()
 
-   const [numState, setNumState] = useState({
+   const [numState] = useState({
       numToday: state.cardDay.length,
       numPast: state.cardDayPast.length,
    })
 
    const [controllerCard, setControllerCard] = useState({
       open_controllerCardPast: state.cardDayPast.length > 0 && true,// en el caso de que si existe las card pasadas se activa el controllador
-      open_controllerCardToday: state.cardDayPast.length === 0 && state.cardDayPast.length > 0 && true, // en el caso de que solo exista card de hoy se activa el controllador
+      open_controllerCardToday: state.cardDayPast.length === 0 && state.cardDay.length > 0 && true, // en el caso de que solo exista card de hoy se activa el controllador
       open_controllerCardIsPast: false,
-      open_controllerCardFinish: state.cardDayPast.length === 0 && state.cardDayPast.length === 0 ? true : false,
+      open_controllerCardFinish: state.cardDayPast.length === 0 && state.cardDay.length === 0 ? true : false,
    })
 
    const [openCard, setopenCard] = useState({
@@ -168,7 +168,7 @@ export const HomePage = () => {
 
    const conpletedChallend = () => {
       if (stateChallenge.length === 1) {
-         console.log('conpletedChallend es 0')
+         handleConfetti()
          setopenCard(() => ({
             open_cardToday: false,
             open_cardPast: false,
@@ -249,6 +249,7 @@ export const HomePage = () => {
                {
                   controllerCard.open_controllerCardToday &&
                   <ControllerCardToday
+                     isToday={controllerCard.open_controllerCardToday}
                      handelStart={handelStart}
                      handelChallend={handelChallend}
                   />
@@ -279,7 +280,6 @@ export const HomePage = () => {
                   />
                }
                {
-                  // openCard.open_cardChallenge &&
                   <CardChallend
                      conpletedChallend={conpletedChallend}
                      className={`${openCard.open_cardChallenge ? 'grid' : 'hidden'}`}
