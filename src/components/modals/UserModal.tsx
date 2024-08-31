@@ -59,7 +59,7 @@ const UserName = ({ setContinueRegister, className }: UserNameProps) => {
    return (
       <fieldset className={`space-y-4 text-center ${className}`}>
          <motion.input
-            className={`block border-b-2 p-2 outline-none text-center font-semibold bg-bgColor ${shake ? 'placeholder:text-red border-b-red' : ''}`}
+            className={`block border-b-2 p-2 outline-none text-center font-semibold bg-bgColor rounded-md ${shake ? 'placeholder:text-red border-b-red' : ''}`}
             type="text"
             name="name"
             autoFocus

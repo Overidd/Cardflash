@@ -1,4 +1,4 @@
-import { ChallegeRandom, IupdatePageDate } from "../utils";
+import { ChallegeRandom, IdataJSONCard, IupdatePageDate } from "../utils";
 
 export const getTwoCardType = async () => {
    try {
@@ -13,18 +13,20 @@ export const getTwoCardType = async () => {
       if (!response.ok) {
          throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
+      const data: IdataJSONCard[] = await json.data
+
       // Filtrar los datos y actualizar el estado usando dispatch
-      const cardDay = await json.data.filter(({ properties: { Date: { date } } }) => {
+      const cardDay = data.filter(({ properties: { Date: { date } } }) => {
          const [year, month, day] = String(date).split('-')
          return new Date(`${month}-${day}-${year}`).getDate() === new Date().getDate();
       });
-      
-      const cardDayPast = await json.data.filter(({ properties: { Date: { date } } }) => {
+
+      const cardDayPast = data.filter(({ properties: { Date: { date } } }) => {
          const [year, month, day] = String(date).split('-')
          return new Date(`${month}-${day}-${year}`).getDate() < new Date().getDate();
       });
-      
+
       // console.log(data, '---')
       // console.log(cardDay)
       // console.log(cardDayPast)
