@@ -9,9 +9,11 @@ import { Card } from "../cards"
 interface IdayPastProps {
    handelComplete: () => void;
    handelOmit: () => void;
+   handelChallend: () => void;
    className?: string;
+   isStateCardPast: boolean;
 }
-export const ControllerCardPast = ({ handelComplete, handelOmit, className }: IdayPastProps) => {
+export const ControllerCardPast = ({ isStateCardPast, handelChallend, handelComplete, handelOmit, className }: IdayPastProps) => {
    const user: Iuser = useOutletContext()
    return (
       <Card
@@ -36,11 +38,18 @@ export const ControllerCardPast = ({ handelComplete, handelOmit, className }: Id
                   <GalleryHorizontalEnd />
                </ButtonAction>
 
-               <ButtonAction
-                  bgColor="quaternaryBlue"
-                  text="Omitir"
-                  onClick={handelOmit}
-               />
+               {isStateCardPast
+                  ? <ButtonAction
+                     bgColor="quaternaryBlue"
+                     text="Reto"
+                     onClick={handelChallend}
+                  />
+                  : <ButtonAction
+                     bgColor="quaternaryBlue"
+                     text="Omitir"
+                     onClick={handelOmit}
+                  />
+               }
             </div>
          </div>
       </Card>

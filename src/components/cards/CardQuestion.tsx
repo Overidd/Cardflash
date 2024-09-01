@@ -2,10 +2,26 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, Icolor } from "./Card";
 import { ButtonResponse } from "../bottoms";
+import { ColorKeys } from "../../utils";
+
+const Icolors = {
+   grey: '#a6a6a6',
+   greySegundary: '#2e3856',
+   red: '#ff5757',
+   yellow: '#ff914d',
+   green: '#00bf63',
+   default: '#373737',
+   gray: '#5a5a5a',
+   blue: '#1f466a',
+   purple: '#67527b',
+   brown: '#633b2e',
+   orange: '#8a4b24',
+   pink: '#6d324b',
+}
 
 type Ipropite = {
    select: string,
-   color: string
+   color: ColorKeys
    id?: string
 }[];
 
@@ -18,10 +34,13 @@ interface IQuestion {
    link: string;
    questionAnswer: (id: string, status: string) => Promise<boolean>
    isCard: () => void
-   statusColor: string,
+   statusColor: ColorKeys,
 }
 
 export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, question, answer, properties, statusColor }: IQuestion) => {
+   console.log(statusColor)
+   const colorContainer = Icolors[statusColor]
+
    const [isFlipped, setIsFlipped] = useState(false);
    const handleFlip = () => {
       setIsFlipped(!isFlipped);
@@ -45,14 +64,15 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
             style={{ perspective: "1000px" }} // Aplicar perspectiva
          >
             <motion.div
-               className={`relative w-full h-full cursor-pointer select-none ${statusColor}`}
+               className={`relative w-full h-full cursor-pointer select-none`}
                onClick={handleFlip}
                initial={false}
                animate={{ rotateX: isFlipped ? 180 : 0 }}
                transition={{ duration: 0.3, ease: "easeOut" }} // Transición más suave
                style={{
                   transformStyle: "preserve-3d",
-                  perspective: "1000px"
+                  perspective: "1000px",
+                  backgroundColor: colorContainer,
                }}
             >
                <div
@@ -63,9 +83,11 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
                      {
                         properties.map(({ color, select, id }) => {
                            if (select == null) return
-                           const colorMap = `bg-${color}`
+                           const colorMap = Icolors[color]
                            return (
-                              <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md ${colorMap} border-2 border-[#fff4]`}>
+                              <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md border-2 border-[#fff4]`}
+                                 style={{ backgroundColor: colorMap }}
+                              >
                                  {select}
                               </span>)
                         })

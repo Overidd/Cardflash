@@ -60,10 +60,24 @@ interface Answer {
    content: null | string;
    link: null | string;
 }
+export enum ColorKeys {
+   Grey = 'grey',
+   GreySegundary = 'greySegundary',
+   Red = 'red',
+   Yellow = 'yellow',
+   Green = 'green',
+   Default = 'default',
+   Gray = 'gray',
+   Blue = 'blue',
+   Purple = 'purple',
+   Brown = 'brown',
+   Orange = 'orange',
+   Pink = 'pink',
+}
 
 interface Category {
    select: string;
-   color: string;
+   color: ColorKeys;
    id?: string;
 }
 
@@ -77,5 +91,5 @@ interface Respontracker {
 
 interface Status {
    name: string;
-   color: string;
+   color: ColorKeys;
 }

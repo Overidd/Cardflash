@@ -85,6 +85,8 @@ export const HomePage = () => {
                   <ControllerCardPast
                      handelComplete={handelComplete}
                      handelOmit={handelOmit}
+                     handelChallend={handelChallend}
+                     isStateCardPast={state.cardDay.length === 0}
                   />
                }
                {

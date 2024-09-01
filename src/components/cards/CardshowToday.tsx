@@ -21,7 +21,7 @@ export const CardshowToday = ({ isCardToday }: IshowTodayProps) => {
       properties={[{ ...Category }, { ...Theme }]}
       link={Answer.link || ''}
       questionAnswer={questionAnsweredDay}
-      statusColor={`bg-${Status.color}`}
+      statusColor={Status.color}
       id={id}
       isCard={isCardToday}
     />

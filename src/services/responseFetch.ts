@@ -26,9 +26,6 @@ export const getTwoCardType = async () => {
          const [year, month, day] = String(date).split('-')
          return new Date(`${month}-${day}-${year}`) < new Date();
       });
-
-      console.log(cardDay, cardDayPast)
-      console.log(data)
       return {
          cardDay,
          cardDayPast,

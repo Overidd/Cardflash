@@ -2,9 +2,8 @@ import { ContextChallenge, CounterAnswersContext, IsLoadingContext, challegeRedu
 import { ReactNode, useReducer, useState } from "react";
 import { getCardCategory, getCardRandom } from "../services";
 import { ChallegeRandom } from "../utils";
-import { dataChallenge } from "../data/dataChallenge";
 
-const initialState: ChallegeRandom[] = dataChallenge;
+const initialState: ChallegeRandom[] = [];
 
 type ProviderProps = {
    children: ReactNode;

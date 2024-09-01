@@ -154,6 +154,17 @@ export const useControllerCard = () => {
             open_cardPast: false,
             open_cardChallenge: false,
          }))
+
+         if (state.cardDayPast.length > 0 && state.cardDay.length == 0) {
+            setControllerCard(() => ({
+               open_controllerCardPast: true,
+               open_controllerCardToday: false,
+               open_controllerCardIsPast: false,
+               open_controllerCardFinish: false,
+            }))
+            return
+         }
+
          if (state.cardDay.length > 0) {
             setControllerCard(() => ({
                open_controllerCardPast: false,
