@@ -54,6 +54,7 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
 
    const openlink = () => {
       if (link.length > 0) {
+         console.log('openlink')
          window.open(link, '_blank');
       }
    }
