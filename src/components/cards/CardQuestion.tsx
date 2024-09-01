@@ -23,7 +23,6 @@ interface IQuestion {
 
 export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, question, answer, properties, statusColor }: IQuestion) => {
    const [isFlipped, setIsFlipped] = useState(false);
-
    const handleFlip = () => {
       setIsFlipped(!isFlipped);
    };
@@ -46,7 +45,7 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
             style={{ perspective: "1000px" }} // Aplicar perspectiva
          >
             <motion.div
-               className={`relative w-full h-full cursor-pointer select-none bg-${statusColor}`}
+               className={`relative w-full h-full cursor-pointer select-none ${statusColor}`}
                onClick={handleFlip}
                initial={false}
                animate={{ rotateX: isFlipped ? 180 : 0 }}
@@ -64,8 +63,9 @@ export const CardQuestion = ({ isCard, link, questionAnswer, id, bgColor, questi
                      {
                         properties.map(({ color, select, id }) => {
                            if (select == null) return
+                           const colorMap = `bg-${color}`
                            return (
-                              <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md bg-${color} border-2 border-[#fff4]`}>
+                              <span key={id} className={`w-fit inline-block px-2 py-1 rounded-md ${colorMap} border-2 border-[#fff4]`}>
                                  {select}
                               </span>)
                         })
